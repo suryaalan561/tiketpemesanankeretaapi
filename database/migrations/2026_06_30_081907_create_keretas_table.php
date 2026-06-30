@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('keretas', function (Blueprint $table) {
             $table->id();
             $table->string('nama_kereta');
-            $table->string('kelas'); // Eksekutif, Bisnis, Ekonomi
+            $table->string('kelas');
             $table->integer('total_kursi');
             $table->timestamps();
         });
