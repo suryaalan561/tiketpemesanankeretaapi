@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public functio n up(): void
     {
         Schema::create('keretas', function (Blueprint $table) {
             $table->id();
