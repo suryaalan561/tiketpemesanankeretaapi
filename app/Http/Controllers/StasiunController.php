@@ -21,7 +21,8 @@ class StasiunController extends Controller
      */
     public function create()
     {
-        $this->validate();
+        // ✨ PERBAIKAN: Baris $this->validate() yang menyebabkan error sudah dihapus.
+        // Fungsi ini sekarang murni hanya bertugas memanggil halaman form tambah stasiun baru.
         return view('admin.stasiun.create');
     }
 
