@@ -91,7 +91,7 @@ class PemesananController extends Controller
         return back();
     }
 
-    // 🌟 SISIPAN BARU: Fungsi untuk membatalkan pesanan (Hanya jika belum bayar)
+    // 🌟 PERBAIKAN DI SINI: Logika diubah menjadi delete agar sinkron dengan batasan Enum database Anda
     public function batalkanPesanan($id)
     {
         // Cari data pesanan berdasarkan ID menggunakan Model Pesanan resmi proyek Anda
@@ -99,9 +99,9 @@ class PemesananController extends Controller
 
         // Validasi keamanan: Pastikan statusnya memang masih belum_bayar
         if ($pesanan->status_pembayaran == 'belum_bayar') {
-            $pesanan->update([
-                'status_pembayaran' => 'batal'
-            ]);
+            
+            // Menghapus data pesanan dari database agar slot kursi kembali kosong dan terhindar dari error Enum
+            $pesanan->delete();
 
             return redirect()->route('pesanan.riwayat')->with('success', 'Pesanan tiket berhasil dibatalkan.');
         }
@@ -139,9 +139,9 @@ class PemesananController extends Controller
         $batasWaktu = $waktuDibuat->copy()->addMinutes(10);
         $sekarang = \Carbon\Carbon::now();
 
-        // Jika waktu sekarang sudah melewati batas 10 menit, batalkan otomatis
+        // Jika waktu sekarang sudah melewati batas 10 menit, hapus otomatis agar tidak mengunci database
         if ($sekarang->greaterThanOrEqualTo($batasWaktu)) {
-            $pesanan->update(['status_pembayaran' => 'batal']);
+            $pesanan->delete();
             return redirect()->route('pesanan.riwayat')->with('error', 'Waktu pembayaran telah habis (melebihi 10 menit). Pesanan otomatis dibatalkan.');
         }
 
@@ -159,7 +159,7 @@ class PemesananController extends Controller
         // Pastikan belum kedaluwarsa saat tombol diklik
         $batasWaktu = \Carbon\Carbon::parse($pesanan->created_at)->addMinutes(10);
         if (\Carbon\Carbon::now()->greaterThanOrEqualTo($batasWaktu)) {
-            $pesanan->update(['status_pembayaran' => 'batal']);
+            $pesanan->delete();
             return redirect()->route('pesanan.riwayat')->with('error', 'Gagal memproses. Waktu pembayaran Anda sudah habis.');
         }
 

@@ -47,9 +47,9 @@
                 </form>
 
                 <div class="mt-4 p-2 bg-light rounded text-center small text-muted">
-                    <strong>Akun Uji Coba (Dari Seeder):</strong><br>
-                    <span class="d-block text-start mt-1">🔑 **Admin:** admin@kai.com / password123</span>
-                    <span class="d-block text-start">🔑 **Penumpang:** budi@email.com / password123</span>
+                    <strong>Tugas Praktek Pemrograman Web</strong><br>
+                    <span class="d-block text-start mt-1"></span>
+                    <span class="d-block text-start"></span>
                 </div>
             </div>
         </div>
